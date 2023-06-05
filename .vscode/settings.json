@@ -1,0 +1,7 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "/home/karkibaby/Documents/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar",
+    "/home/karkibaby/Documents/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar"
+  ]
+}

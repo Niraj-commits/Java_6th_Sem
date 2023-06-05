@@ -1,54 +1,75 @@
 package Register;
 
 import javax.swing.*;
+import java.sql.*;
+import javax.swing.*;
+import java.awt.event.*;
 
-public class register {
-   
-    public register(){
+public class register implements ActionListener {
 
-        JFrame title = new JFrame("Register");
+    JTextField userInput;
+    JPasswordField passField;
+    JFrame f;
 
-        JLabel userName = new JLabel("Full Name: ");
-        userName.setBounds(20,20,150,25);
-        title.add(userName);
+    public register() {
+        f = new JFrame("Register");
+        JLabel user = new JLabel("Username");
 
-        JTextField user = new JTextField();
-        user.setBounds(180,20,150,25);
-        title.add(user);
+        user.setBounds(20, 20, 150, 25);
+        f.add(user);
 
-        JLabel email = new JLabel("Email: ");
-        email.setBounds(20,55,150,25);
-        title.add(email);
+        userInput = new JTextField();
+        userInput.setBounds(180, 20, 150, 25);
+        f.add(userInput);
 
-        JTextField emailAdd = new JTextField();
-        emailAdd.setBounds(180,55,150,25);
-        title.add(emailAdd);
-        
-        JLabel Pass = new JLabel("Password: ");
-        Pass.setBounds(20,85,150,25);
-        title.add(Pass);
+        JLabel pass = new JLabel("Password");
+        pass.setBounds(20, 55, 150, 25);
+        f.add(pass);
 
-        JTextField pass = new JTextField();
-        pass.setBounds(180,85,150,25);
-        title.add(pass);
+        passField = new JPasswordField();
+        passField.setBounds(180, 55, 150, 25);
+        f.add(passField);
 
-        JLabel cpass = new JLabel("Confirm Password: ");
-        cpass.setBounds(20,115,150,25);
-        title.add(cpass);
-        
-        JTextField cPass = new JTextField();
-        cPass.setBounds(180,115,150,25);
-        title.add(cPass);
+        JButton b1 = new JButton();
+        b1.setText("Register");
+        b1.setBounds(180, 90, 150, 25);
+        b1.addActionListener(this);
+        f.add(b1);
 
-        JButton submit = new JButton("Submit");
-        submit.setBounds(190,155,90,35);
-        title.add(submit);
-
-        title.setSize(500,500);
-        title.setLayout(null);
-        title.setVisible(true);
+        f.setSize(500, 500);
+        f.setLayout(null);
+        f.setVisible(true);
     }
-    public static void main (String[] args){
+
+    public void actionPerformed(ActionEvent e) {
+        String user = userInput.getText();
+        String pass = passField.getText();
+
+        String db = "jdbc:mysql://localhost:3306/db1?useSSL=false";
+        String dbUser = "root";
+        String dbPass = "";
+
+        try (Connection conn = DriverManager.getConnection(db, dbUser, dbPass)) {
+            String query = ("insert INTO user (username,password) values ('" + user + "','" + pass + "')");
+            Statement stmt = conn.createStatement();
+            int res = stmt.executeUpdate(query);
+
+            if (res > 0) {
+
+                JDialog dialog = new JDialog(f, "Authenticated Successfully", true);
+                dialog.setLocationRelativeTo(dialog);
+                dialog.setSize(400, 400);
+                dialog.setVisible(true);
+            }
+            conn.close();
+            userInput.setText("");
+            passField.setText("");
+        } catch (Exception se) {
+            System.out.println(se.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
         new register();
     }
 }
