@@ -45,12 +45,12 @@ public class register implements ActionListener {
         String user = userInput.getText();
         String pass = passField.getText();
 
-        String db = "jdbc:mysql://localhost:3306/db1?useSSL=false";
+        String db = "jdbc:mysql://localhost:3306/adv_java_Lab?useSSL=false";
         String dbUser = "root";
         String dbPass = "";
 
         try (Connection conn = DriverManager.getConnection(db, dbUser, dbPass)) {
-            String query = ("insert INTO user (username,password) values ('" + user + "','" + pass + "')");
+            String query = ("insert INTO employees (username,password) values ('" + user + "','" + pass + "')");
             Statement stmt = conn.createStatement();
             int res = stmt.executeUpdate(query);
 
