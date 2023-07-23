@@ -10,7 +10,7 @@ public class lab2 {
         frame.setSize(300, 150);
         frame.setLayout(new FlowLayout());
 
-        JLabel styledLabel = createStyledLabel("This is an italic text!", Font.ITALIC, 18, Color.BLUE);
+        JLabel styledLabel = createStyledLabel("Italic is an awesome font", Font.ITALIC, 18, Color.BLUE);
 
         frame.add(styledLabel);
 
